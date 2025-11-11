@@ -87,7 +87,7 @@ $subjects = $subjects_stmt->fetchAll(PDO::FETCH_ASSOC);
                         </thead>
                         <tbody>
                             <?php if (empty($subjects)): ?>
-                                <tr><td colspan="3">No subjects found. Add one using the form above.</td></tr>
+                                <tr><td colspan="3">No subjects found. Add one using the form above</td></tr>
                             <?php else: ?>
                                 <?php foreach ($subjects as $subject): ?>
                                     <tr>
