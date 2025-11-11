@@ -77,6 +77,7 @@ $subjects = $subjects_stmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Card for Listing Existing Subjects -->
                 <div class="card">
                     <h3>My Subjects</h3>
+                    <div class="table-responsive">
                     <table>
                         <thead>
                             <tr>
@@ -102,7 +103,8 @@ $subjects = $subjects_stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
-                    </table>
+                        </table>
+                    </div>
                 </div>
             </div>
         </main>

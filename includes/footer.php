@@ -1,6 +1,6 @@
-</main> <!-- .container -->
-    <footer>
-        <p>&copy; <?php echo date("Y"); ?> Teacher's Grading System</p>
-    </footer>
+</main> <!-- end .main-content -->
+    </div> <!-- end .page-wrapper -->
+
+ <script src="public/js/script.js"></script>
 </body>
 </html>

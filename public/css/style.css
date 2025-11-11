@@ -24,9 +24,147 @@ body {
 
 .page-wrapper {
     display: flex;
+    position: relative;
+    min-height: 100vh;
 }
 
-/* --- Sidebar --- */
+/* --- New Styles for Enter Grades Page --- */
+.step-card {
+    border: 2px dashed var(--border-color);
+    background-color: #fcfcfc;
+    box-shadow: none;
+    transition: border-color 0.3s ease;
+}
+
+.step-card.active {
+    border-style: solid;
+    
+    background-color: #ffffff;
+}
+
+.step-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.3rem;
+    color: #95a5a6; /* Greyed out by default */
+}
+
+.step-card.active h3 {
+    color: var(--primary-color); /* Highlight active step */
+}
+
+.step-card h3 .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #e1e1e1;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.step-card.active h3 .step-number {
+    background-color: var(--primary-color);
+}
+
+/* --- NEW MODERN DASHBOARD STYLES --- */
+.subject-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+    overflow: hidden; /* Important for clean corners */
+}
+
+.subject-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 25px;
+}
+
+.subject-info h3 {
+    margin: 0 0 5px 0;
+    padding: 0;
+    border: none;
+    font-size: 1.4rem;
+    color: #2c3e50;
+}
+
+.subject-info p {
+    margin: 0;
+    color: #7f8c8d;
+    font-weight: bold;
+}
+
+.subject-actions .btn-edit {
+    font-size: 1rem;
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: 2px solid var(--primary-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.subject-card-body {
+    padding: 0 25px 25px 25px;
+}
+
+.subject-card-body h4 {
+    margin: 0 0 15px 0;
+    font-size: 0.9rem;
+    color: #95a5a6;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sections-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.section-link-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border-radius: 30px; /* Pill-shaped buttons */
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.section-link-btn:hover {
+    background-color: var(--primary-hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.add-section-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.add-section-form input[type="text"] {
+    flex-grow: 1;
+    border-radius: 30px;
+    padding-left: 20px;
+}
+
+.add-section-form button {
+    padding: 10px 15px;
+    font-size: 1.2rem;
+    border-radius: 50%; /* Make the button circular */
+}
+
+/* --- DESKTOP Sidebar --- */
 .sidebar {
     width: 250px;
     background: var(--sidebar-bg);
@@ -37,6 +175,8 @@ body {
     left: 0;
     display: flex;
     flex-direction: column;
+    z-index: 1000; /* Keep sidebar on top */
+    transition: transform 0.3s ease-in-out;
 }
 
 .sidebar-header {
@@ -72,18 +212,25 @@ body {
     background-color: var(--sidebar-hover);
 }
 
+
+
+/* --- Mobile Header (Hidden on Desktop) --- */
+.mobile-header {
+    display: none;
+}
+
 /* --- Main Content --- */
 .main-content {
-    margin-left: 250px; /* Same as sidebar width */
-    width: calc(100% - 250px);
+    margin-left: 50px; /* Space for the sidebar */
+    width: calc(100% - 20px);
     padding: 30px;
     box-sizing: border-box;
 }
 
 .container {
-    max-width: 1100px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0; /* Padding is now on the card */
+    padding: 0;
 }
 
 .card {
@@ -95,20 +242,55 @@ body {
 }
 
 /* --- Typography --- */
+/* --- NEW Cohesive Dark Header UI --- */
 .page-header {
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
+    background-color: var(--sidebar-bg); /* Use the same color as the sidebar */
+    padding: 30px 40px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border-bottom: 3px solid var(--primary-color); /* Accent color border at the bottom */
 }
 
 .page-header h1, .page-header h2 {
     margin: 0;
-    color: #2c3e50;
+    color: #ffffff; /* White text for high contrast */
+    font-size: 2rem;
+    font-weight: 700;
 }
 
 .page-header p {
     margin-top: 5px;
-    color: #555;
+    color: rgba(255, 255, 255, 0.7); /* Semi-transparent white for subtitle */
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+/* --- NEW "Ghost" Button Style for the Header --- */
+.page-header .btn {
+    background: transparent; /* Transparent background */
+    border: 2px solid rgba(255, 255, 255, 0.8); /* White outline */
+    color: #ffffff; /* White text */
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 10px 22px;
+    transition: all 0.3s ease;
+}
+
+.page-header .btn:hover {
+    background: #ffffff; /* Fill with white on hover */
+    color: var(--sidebar-bg); /* Change text to the dark background color */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Search Form Styling --- */
+.search-form .form-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+.search-form input[type="text"] {
+    flex-grow: 1; /* Allows the input to take up available space */
 }
 
 h3 {
@@ -160,7 +342,7 @@ button, .btn {
     border-radius: 6px;
     cursor: pointer;
     text-decoration: none;
-    text-align: center;
+    text-align: right;
     font-size: 1rem;
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -168,10 +350,15 @@ button, .btn {
 
 button:hover, .btn:hover {
     background: var(--primary-hover-color);
-    transform: translateY(-2px); /* Slight lift effect */
+    transform: translateY(-2px);
 }
 
 /* --- Tables --- */
+.table-responsive {
+    overflow-x: auto;
+    width: 100%;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -182,6 +369,7 @@ table th, table td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
+    white-space: nowrap; /* Prevents text from wrapping in table cells */
 }
 
 table thead th {
@@ -192,35 +380,6 @@ table thead th {
 
 table tbody tr:hover {
     background-color: #f1f5f8;
-}
-
-/* --- Grade Remarks Styling --- */
-.remarks-excellent {
-    color: #0d47a1; /* Dark Blue */
-    font-weight: bold;
-}
-
-.remarks-very-good {
-    color: #155724; /* Dark Green */
-    font-weight: bold;
-}
-
-.remarks-good {
-    color: #1e8e3e; /* Standard Green */
-    font-weight: bold;
-}
-
-.remarks-satisfactory {
-    color: #333333; /* Default Text Color */
-}
-
-.remarks-pass {
-    color: #5f6368; /* Greyish Text */
-}
-
-.remarks-fail {
-    color: #d93025; /* Strong Red */
-    font-weight: bold;
 }
 
 /* --- Student Image Styles --- */
@@ -235,57 +394,125 @@ table tbody tr:hover {
 
 /* --- Action Buttons --- */
 .action-links {
-    display: flex; /* Aligns buttons in a row */
+    display: flex;
     align-items: center;
-    gap: 10px; /* Adds space between buttons */
+    gap: 10px;
 }
 
 .action-links a {
     text-decoration: none;
     font-weight: bold;
-    padding: 8px 12px; /* Give them button-like padding */
+    padding: 8px 12px;
     border-radius: 6px;
-    border: 2px solid transparent; /* Prepare for border on hover */
+    border: 2px solid transparent;
     transition: all 0.3s ease;
     text-align: center;
+    font-size: 0.9rem;
 }
 
-/* --- The Main "View Details" Button Style (already exists) --- */
-.btn {
-    /* This style is already defined in your "Buttons" section */
-    /* background: var(--primary-color); color: #ffffff; etc. */
-}
-
-/* --- New Style for the EDIT Button --- */
 .btn-edit {
-    background-color: green;
-    color: var(--background-color);
+    background-color: #ffffff;
+    color: var(--primary-color);
     border-color: var(--primary-color);
 }
 
 .btn-edit:hover {
-    background-color:  green;
+    background-color: var(--primary-color);
     color: #ffffff;
     transform: translateY(-2px);
 }
 
-/* --- New Style for the DELETE Button --- */
 .btn-delete {
-    background-color: var(--danger-color);
-    color: var(--card-background-color);
+    background-color: #ffffff;
+    color: var(--danger-color);
     border-color: var(--danger-color);
 }
 
 .btn-delete:hover {
     background-color: var(--danger-color);
-    color: var(--card-background-color);
+    color: #ffffff;
     transform: translateY(-2px);
 }
 
-/* --- Footer --- */
-footer {
-    text-align: center;
-    margin-top: 40px;
-    padding: 20px;
-    color: #777;
+/* --- Grade Remarks Styling --- */
+.remarks-excellent { color: #0d47a1; font-weight: bold; }
+.remarks-very-good, .remarks-good { color: #1e8e3e; font-weight: bold; }
+.remarks-satisfactory, .remarks-pass { color: #333333; }
+.remarks-fail { color: #d93025; font-weight: bold; }
+
+/* --- Pagination Styling --- */
+.pagination { margin-top: 25px; display: flex; justify-content: center; align-items: center; list-style: none; padding: 0; }
+.pagination li { margin: 0 5px; }
+.pagination li a { display: block; padding: 8px 16px; text-decoration: none; color: var(--primary-color); background-color: #ffffff; border: 1px solid var(--border-color); border-radius: 6px; transition: all 0.3s ease; }
+.pagination li a:hover { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); }
+.pagination li.active a { background-color: var(--primary-color); color: #ffffff; border-color: var(--primary-color); cursor: default; }
+.pagination li.disabled a { color: #aaa; pointer-events: none; background-color: #f9f9f9; }
+
+/* --- Alert Messages --- */
+.alert { padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: 6px; font-weight: bold; }
+.alert-success { color: #155724; background-color: #d4edda; border-color: #c3e6cb; }
+.alert-danger { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
+
+
+/* ###################################################### */
+/* ### RESPONSIVE STYLES (for screens 992px or less) ### */
+/* ###################################################### */
+
+@media (max-width: 992px) {
+    /* --- Hide Sidebar by Default on Mobile --- */
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    /* --- Show Sidebar when 'open' class is added by JS --- */
+    .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+    }
+    
+    /* --- Show the Mobile Header --- */
+    .mobile-header {
+        display: flex;
+        align-items: center;
+        background: #fff;
+        padding: 10px 15px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 900;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        box-sizing: border-box;
+    }
+
+    .sidebar-toggle-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--sidebar-bg);
+        margin-right: 15px;
+    }
+
+    .mobile-header h3 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: var(--sidebar-bg);
+    }
+
+    /* --- Adjust Main Content for Mobile --- */
+    .main-content {
+        margin-left: 0; /* Remove space for sidebar */
+        width: 100%;
+        padding: 80px 15px 15px 15px; /* Add top padding to account for fixed mobile header */
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    /* Reduce font sizes for smaller screens */
+    .page-header h2 {
+        font-size: 1.5rem;
+    }
 }

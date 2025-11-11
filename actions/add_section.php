@@ -11,5 +11,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['section_name'])) {
     }
 }
 
-header('Location: ../view_subject.php?id=' . $subject_id);
+header('Location: ../index.php');
 exit();
