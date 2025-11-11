@@ -28,6 +28,37 @@ body {
     min-height: 100vh;
 }
 
+/* --- Corrected Styles for Header with Actions --- */
+.page-header {
+    /* The dark background and other styles are inherited from the main .page-header rule */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* Adds space between text and button */
+}
+
+.header-content {
+    flex-grow: 1;
+}
+
+/* We override the margin on the <p> tag ONLY when it's in the header */
+.page-header p {
+    margin-bottom: 0; 
+}
+
+/* Style for our secondary/back button */
+.btn-secondary {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    color: #ffffff;
+    flex-shrink: 0; /* Prevents the button from shrinking */
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 1);
+    color: var(--sidebar-bg);
+}
+
 /* --- New Styles for Enter Grades Page --- */
 .step-card {
     border: 2px dashed var(--border-color);
@@ -130,7 +161,7 @@ body {
 
 .section-link-btn {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 15px 40px;
     background-color: var(--primary-color);
     color: #ffffff;
     border-radius: 30px; /* Pill-shaped buttons */
@@ -145,6 +176,49 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+
+/* --- NEW Styles for Section List on View Subject Page --- */
+.section-chip-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px; /* Space between each chip */
+}
+
+.section-chip {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #ffffff;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px; /* Slightly squared corners */
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--text-color);
+    transition: all 0.2s ease-in-out;
+    font-size: 0.9rem;
+}
+
+.section-chip:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #ffffff;
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* The animated arrow that appears on hover */
+.section-list-item a::after {
+    content: '\2192'; /* This is the Unicode for a right arrow → */
+    font-size: 1.5rem;
+    opacity: 0; /* Hidden by default */
+    transform: translateX(-10px); /* Start it slightly to the left */
+    transition: all 0.3s ease;
+}
+
+.section-list-item a:hover::after {
+    opacity: 1;
+    transform: translateX(0); /* Move it into place on hover */
+}
+
+
 
 .add-section-form {
     display: flex;
@@ -162,6 +236,43 @@ body {
     padding: 10px 15px;
     font-size: 1.2rem;
     border-radius: 50%; /* Make the button circular */
+}
+
+/* --- NEW STYLES FOR TABBED INTERFACE --- */
+.tab-navigation {
+    display: flex;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 25px;
+}
+
+.tab-nav-button {
+    padding: 15px 25px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #7f8c8d;
+    position: relative;
+    top: 2px; /* Aligns with the bottom border */
+    border-bottom: 2px solid transparent;
+}
+
+.tab-nav-button.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.tab-content {
+    display: none; /* Hide all tab content by default */
+}
+
+.tab-content.active {
+    display: block; /* Show only the active tab's content */
+}
+
+.tab-nav-button:hover{
+    color: var(--background-color)
 }
 
 /* --- DESKTOP Sidebar --- */
@@ -221,14 +332,14 @@ body {
 
 /* --- Main Content --- */
 .main-content {
-    margin-left: 50px; /* Space for the sidebar */
-    width: calc(100% - 20px);
+    margin-left: 250px; /* Correctly offset by the full sidebar width */
+    width: calc(100% - 250px); /* Correctly calculated width */
     padding: 30px;
     box-sizing: border-box;
 }
 
 .container {
-    max-width: 1400px;
+    max-width: 1700px; /* Your new, wider container */
     margin: 0 auto;
     padding: 0;
 }
@@ -241,7 +352,7 @@ body {
     margin-bottom: 30px;
 }
 
-/* --- Typography --- */
+
 /* --- NEW Cohesive Dark Header UI --- */
 .page-header {
     background-color: var(--sidebar-bg); /* Use the same color as the sidebar */
@@ -330,6 +441,30 @@ h3 {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.step-card table form input[type="number"],
+.step-card table input[type="number"] {
+    text-align: center; /* Center the score text */
+    font-size: 1.1rem; /* Make the font slightly larger */
+    font-weight: bold;
+    padding: 12px 10px; /* Adjust padding for a taller feel */
+    border: 2px solid var(--border-color); /* A slightly thicker border */
+    border-radius: 8px;
+    background-color: #f8f9fa; /* A very light grey background */
+}
+
+/* Style for the placeholder text */
+.step-card table input[type="number"]::placeholder {
+    color: #ced4da;
+    font-weight: normal;
+}
+
+/* Enhanced focus style */
+.step-card table input[type="number"]:focus {
+    background-color: #ffffff;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.15); /* A softer, larger glow */
 }
 
 /* --- Buttons --- */

@@ -68,9 +68,18 @@ if ($selected_component_id) {
 
 <div class="container">
     <div class="page-header">
-        <h2>Enter Grades for <?php echo htmlspecialchars($section['section_name']); ?></h2>
-        <p>Subject: <?php echo htmlspecialchars($section['subject_name']); ?></p>
+        <!-- All header content now lives inside this div -->
+        <div class="header-content">
+            <h2>Enter Grades for <?php echo htmlspecialchars($section['section_name']); ?></h2>
+            <p>Subject: <?php echo htmlspecialchars($section['subject_name']); ?></p>
+        </div>
+        <div class="header-actions">
+            <a href="view_section.php?id=<?php echo $section_id; ?>" class="btn btn-secondary">
+                &larr; Back to Grade Summary
+            </a>
+        </div>
     </div>
+
 
     <?php if (isset($_SESSION['success_message'])): ?>
         <div class="alert alert-success"><?php echo $_SESSION['success_message']; unset($_SESSION['success_message']); ?></div>
