@@ -92,7 +92,11 @@ $unassigned_students = $unassigned_stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Grade Summary Tab -->
     <div id="summary" class="tab-content">
         <div class="card">
-            <h3>Final Grade Summary</h3>
+           <!-- NEW CARD HEADER STRUCTURE -->
+            <div class="card-header">
+                <h3>Final Grade Summary</h3>
+                <a href="actions/export_grades.php?section_id=<?php echo $section_id; ?>" class="btn">Export</a>
+            </div>
             <?php
             $components_by_term = [];
             foreach ($components as $component) { $components_by_term[$component['term']][] = $component; }

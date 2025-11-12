@@ -29,61 +29,73 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['student_file']) && is
         
         $imported_count = 0;
         $skipped_count = 0;
+        $error_rows = 0;
 
         $check_student_stmt = $pdo->prepare("SELECT student_id FROM students WHERE last_name = ? AND first_name = ?");
         $insert_student_stmt = $pdo->prepare("INSERT INTO students (last_name, first_name, middle_name) VALUES (?, ?, ?)");
         $check_enrollment_stmt = $pdo->prepare("SELECT id FROM enrollments WHERE section_id = ? AND student_id = ?");
         $enroll_stmt = $pdo->prepare("INSERT INTO enrollments (section_id, student_id) VALUES (?, ?)");
 
+        // Loop through each ROW from the Excel file
         foreach ($rows as $row) {
-            // --- NEW SINGLE-CELL PARSING LOGIC ---
-            $full_name = isset($row[0]) ? trim($row[0]) : '';
-            if (empty($full_name)) {
-                continue; // Skip empty rows
+            $name_found = false;
+
+            // --- NEW LOGIC: Loop through each CELL in the current row ---
+            foreach ($row as $cell) {
+                $full_name = trim($cell);
+                
+                // We check if the cell content looks like a name (contains a comma)
+                if (!empty($full_name) && strpos($full_name, ',') !== false) {
+                    
+                    // Found a potential name, now parse it
+                    $parts = explode(',', $full_name, 2);
+                    if (count($parts) < 2) continue; // Malformed, skip to next cell
+
+                    $last_name = trim($parts[0]);
+                    $rest_of_name = trim($parts[1]);
+                    
+                    $name_parts = explode(' ', $rest_of_name, 2);
+                    $first_name = trim($name_parts[0]);
+                    $middle_name = isset($name_parts[1]) ? trim($name_parts[1]) : '';
+
+                    if (empty($last_name) || empty($first_name)) {
+                        continue; // Invalid parse, skip to next cell
+                    }
+
+                    // --- Database Logic (remains the same) ---
+                    $check_student_stmt->execute([$last_name, $first_name]);
+                    $student = $check_student_stmt->fetch();
+                    $student_id = null;
+
+                    if ($student) {
+                        $student_id = $student['student_id'];
+                    } else {
+                        $insert_student_stmt->execute([$last_name, $first_name, $middle_name]);
+                        $student_id = $pdo->lastInsertId();
+                    }
+
+                    $check_enrollment_stmt->execute([$section_id, $student_id]);
+                    if ($check_enrollment_stmt->fetch()) {
+                        $skipped_count++;
+                    } else {
+                        $enroll_stmt->execute([$section_id, $student_id]);
+                        $imported_count++;
+                    }
+                    
+                    $name_found = true;
+                    break; // IMPORTANT: Stop searching this row once we've found and processed a name
+                }
             }
-
-            // Split by the first comma to separate Last Name from the rest
-            $parts = explode(',', $full_name, 2);
-            if (count($parts) < 2) {
-                continue; // Skip rows that don't have a comma
-            }
-
-            $last_name = trim($parts[0]);
-            $rest_of_name = trim($parts[1]);
-
-            // Split the rest by the first space to separate First Name from Middle Name
-            $name_parts = explode(' ', $rest_of_name, 2);
-            $first_name = trim($name_parts[0]);
-            $middle_name = isset($name_parts[1]) ? trim($name_parts[1]) : '';
-            // --- END OF NEW LOGIC ---
-
-            if (empty($last_name) || empty($first_name)) {
-                continue;
-            }
-
-            // Check if student exists
-            $check_student_stmt->execute([$last_name, $first_name]);
-            $student = $check_student_stmt->fetch();
-            $student_id = null;
-
-            if ($student) {
-                $student_id = $student['student_id'];
-            } else {
-                $insert_student_stmt->execute([$last_name, $first_name, $middle_name]);
-                $student_id = $pdo->lastInsertId();
-            }
-
-            // Check if enrolled
-            $check_enrollment_stmt->execute([$section_id, $student_id]);
-            if ($check_enrollment_stmt->fetch()) {
-                $skipped_count++;
-            } else {
-                $enroll_stmt->execute([$section_id, $student_id]);
-                $imported_count++;
+            if (!$name_found && !empty(array_filter($row))) {
+                $error_rows++; // Count rows that had data but no valid name format
             }
         }
 
-        $_SESSION['success_message'] = "Import complete! {$imported_count} new students enrolled. {$skipped_count} students were already enrolled.";
+        $message = "Import complete! <strong>{$imported_count}</strong> new students enrolled. <strong>{$skipped_count}</strong> students were already in this section.";
+        if ($error_rows > 0) {
+            $message .= " <strong>{$error_rows}</strong> rows were skipped due to an invalid name format (must be 'Last Name, First Name ...').";
+        }
+        $_SESSION['success_message'] = $message;
 
     } else {
         $_SESSION['error_message'] = "There was an error uploading the file.";
