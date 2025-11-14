@@ -1,6 +1,9 @@
 <?php
+require_once 'includes/session_check.php';
 require_once 'config/db_config.php';
-session_start();
+
+
+
 $page_title = "Dashboard";
 
 // --- FILTERING AND DATA FETCHING ---

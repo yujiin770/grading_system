@@ -653,6 +653,8 @@ table tbody tr:hover {
     transform: translateY(-2px);
 }
 
+
+
 /* --- Grade Remarks Styling --- */
 .remarks-excellent { color: #0d47a1; font-weight: bold; }
 .remarks-very-good, .remarks-good { color: #1e8e3e; font-weight: bold; }
@@ -738,5 +740,23 @@ table tbody tr:hover {
 @media (max-width: 768px) {
     .filter-bar {
         grid-template-columns: 1fr; /* Stack the filters on top of each other on mobile */
+    }
+
+      .settings-form-section {
+        grid-template-columns: 1fr; /* Stack label and input on top of each other */
+        gap: 10px;
+        align-items: flex-start;
+    }
+    .settings-label {
+        margin-bottom: 5px;
+    }
+    .settings-input {
+        max-width: 100%;
+    }
+    .settings-footer {
+        text-align: center;
+    }
+    .settings-footer button {
+        width: 100%;
     }
 }

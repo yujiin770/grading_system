@@ -1,6 +1,8 @@
 <?php
-session_start();
+
 require_once 'config/db_config.php';
+require_once 'includes/session_check.php';
+
 
 // Validate the subject ID from the URL
 if (!isset($_GET['id']) || empty($_GET['id'])) {

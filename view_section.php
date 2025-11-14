@@ -1,6 +1,6 @@
 <?php
 require_once 'config/db_config.php';
-session_start();
+require_once 'includes/session_check.php';
 
 // --- GPA CONVERSION FUNCTION ---
 function calculateGpaEquivalent($final_grade) {

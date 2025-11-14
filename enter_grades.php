@@ -2,6 +2,7 @@
 session_start();
 require_once 'config/db_config.php';
 
+
 if (!isset($_GET['section_id'])) {
     header('Location: subjects.php');
     exit();

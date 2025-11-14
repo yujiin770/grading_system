@@ -30,3 +30,43 @@
 
         sectionSelect.addEventListener('change', submitForm);
     });
+
+// JAVASCRIPT FOR AUTO-SUBMITTING FILTERS //
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterForm = document.getElementById('filter-form');
+        const selects = filterForm.querySelectorAll('select');
+
+        selects.forEach(select => {
+            select.addEventListener('change', function() {
+                filterForm.submit();
+            });
+        });
+    });
+
+    // JAVASCRIPT AUTOMATIC FILTERS//
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterForm = document.getElementById('filter-form');
+        const inputs = filterForm.querySelectorAll('input, select');
+        let searchTimeout;
+
+        function submitForm() {
+            filterForm.submit();
+        }
+
+        inputs.forEach(input => {
+            if (input.type === 'text') {
+                input.addEventListener('keyup', function() {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(submitForm, 500); // Wait 500ms after typing
+                });
+            } else {
+                input.addEventListener('change', submitForm); // Submit immediately for dropdowns
+            }
+        });
+    });
+
+
+    
+

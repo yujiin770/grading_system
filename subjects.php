@@ -1,5 +1,7 @@
 <?php
 require_once 'config/db_config.php';
+require_once 'includes/session_check.php';
+
 
 // --- HANDLE FORM SUBMISSIONS (FOR BOTH ADDING AND UPDATING) ---
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['subject_name'])) {

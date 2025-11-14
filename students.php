@@ -1,6 +1,7 @@
 <?php
 require_once 'config/db_config.php';
-session_start();
+require_once 'includes/session_check.php';
+
 $page_title = "Manage Student List";
 
 // --- HANDLE ADD/UPDATE FORM SUBMISSION ---
